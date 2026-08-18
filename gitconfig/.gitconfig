@@ -1,0 +1,7 @@
+[user]
+	email = azuolas004@gmail.com
+	name = azumawin
+[diff]
+	tool = nvimdiff
+[core]
+	autocrlf = input
