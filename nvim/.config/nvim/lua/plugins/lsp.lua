@@ -57,7 +57,9 @@ return {
                     basedpyright = {
                         analysis = {
                             typeCheckingMode = "standard",
+                            diagnosticMode = "workspace",
                             diagnosticSeverityOverrides = {
+                                reportImplicitAbstractClass = "error",
                                 -- ruff owns these and can autofix them; without this
                                 -- you get every unused import reported twice
                                 reportUnusedImport = "none",

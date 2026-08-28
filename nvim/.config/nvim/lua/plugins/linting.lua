@@ -4,7 +4,7 @@ return {
         local lint = require("lint")
 
         lint.linters_by_ft = {
-            -- lua = { "luacheck" }, -- need to add vim as global, honestly need more care for each language setup, since some lsps provide linting and fi u have 2 linters theyc an fight
+            -- lua = { "luacheck" },
             python = { "ruff" },
             -- cs = { },
             tex = { "vale" },

@@ -52,7 +52,6 @@ return {
         -- auto format buffer on save, will switch based on filetype detected
         config = function(_, opts)
             require("conform").setup(opts)
-
             local grp = vim.api.nvim_create_augroup("Formatting", { clear = true })
             vim.api.nvim_create_autocmd({ "BufWritePre", "BufReadPost" }, {
                 group = grp,
