@@ -1,4 +1,4 @@
 require("keymaps.search")
-require("keymaps.diagnostics")
+require("keymaps.diagnostic")
 require("keymaps.quickfix")
 require("keymaps.diff")

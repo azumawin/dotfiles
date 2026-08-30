@@ -1,3 +1,5 @@
+local impl = require("autocmds.implementations")
+
 -- Highlight yanked text
 local post_yank_grp = vim.api.nvim_create_augroup("post_yank", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -8,14 +10,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
--- temporary autocmd to compile resume, realistically it should compile any just written latex file and not be hardcoded to resume.
+-- Clean previous build artifacts and rebuild the project current latex buffer belongs to
+-- Expects current latex buffer to belong to a latex that has a main.tex defined
 local tex_post_write_grp = vim.api.nvim_create_augroup("tex_post_write", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = tex_post_write_grp,
     pattern = "*.tex",
-    callback = function()
-        vim.cmd("silent !latexmk -C")
-        -- xelatex, lualatex, pdflatex
-        vim.cmd("!latexmk -pdflatex ~/Desktop/resume/resume.tex")
-    end,
+    callback = impl.compile_latex_project_current_buffer_belongs_to,
 })

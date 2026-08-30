@@ -1,6 +1,7 @@
 -- Set up options and keymaps before loading lazynvim
 require("opts")
 require("keymaps")
+require("autocmds.autocmds")
 
 -- Put lazy.nvim on runtimepath
 -- Bootstrap lazy.nvim

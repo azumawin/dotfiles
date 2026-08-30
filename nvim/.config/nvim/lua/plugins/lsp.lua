@@ -39,6 +39,7 @@ return {
                 capabilities = with_blink,
             })
 
+            local basedpyright_config = require("lspconfigs.basedpyright")
             -- overrides
             vim.lsp.config("lua_ls", {
                 settings = {
@@ -48,36 +49,9 @@ return {
                 },
             })
 
-            -- basedpyright defaults to typeCheckingMode = "recommended", which turns
-            -- every optional rule into an error. "standard" is pyright's own default:
-            -- it still catches wrong types, bad attrs and None-deref, without demanding
-            -- a fully annotated codebase. A project's pyproject.toml wins over this.
             vim.lsp.config("basedpyright", {
                 settings = {
-                    basedpyright = {
-                        analysis = {
-                            typeCheckingMode = "standard",
-                            diagnosticMode = "workspace",
-                            diagnosticSeverityOverrides = {
-                                reportImplicitAbstractClass = "error",
-                                -- ruff owns these and can autofix them; without this
-                                -- you get every unused import reported twice
-                                reportUnusedImport = "none",
-                                reportUnusedVariable = "none",
-                                -- noise from untyped third-party libs, not your bugs
-                                reportMissingTypeStubs = "none",
-                                reportUnknownMemberType = "none",
-                                reportUnknownArgumentType = "none",
-                                reportUnknownVariableType = "none",
-                                -- basedpyright-only rules that fire constantly
-                                reportAny = "none",
-                                reportExplicitAny = "none",
-                                reportUnusedCallResult = "none",
-                                reportImplicitOverride = "none",
-                                reportUnannotatedClassAttribute = "none",
-                            },
-                        },
-                    },
+                    basedpyright = basedpyright_config.normal,
                 },
             })
 

@@ -20,8 +20,8 @@ vim.opt.scrolloff = 10 -- minimum number of lines to keep above and below cursor
 vim.opt.wrap = false -- don't wrap text longer than the screen
 
 -- Persist undo history on disk so closing and reopening nvim will still allow to undo changes from previous session
-vim.opt.undofile = true
-vim.opt.undodir = vim.fn.expand("~/.local/state/nvim/undo//")
+-- vim.opt.undofile = true
+-- vim.opt.undodir = vim.fn.expand("~/.local/state/nvim/undo//")
 
 vim.opt.updatetime = 1000
 vim.opt.guicursor =
