@@ -8,6 +8,15 @@ case $- in
       *) return;;
 esac
 
+# `nix develop` sources ~/.bashrc from its generated rcfile, and the dotfiles
+# flake sources this file again from its shellHook once HOME and friends are
+# back. bail on the second pass. deliberately not exported, so a nested project
+# devshell still gets its own fresh pass.
+if [ -n "${DOTFILES_BASHRC_SOURCED:-}" ]; then
+    return
+fi
+DOTFILES_BASHRC_SOURCED=1
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -28,7 +37,9 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+# `command -v` rather than a hardcoded /usr/bin path: inside the nix dotfiles
+# shell these come from the store, and on a fresh machine they may be absent.
+command -v lesspipe >/dev/null && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -73,7 +84,7 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if command -v dircolors >/dev/null; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
@@ -115,16 +126,31 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PATH="$HOME/.local/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/.TinyTeX/bin/x86_64-linux:$PATH"
-export PATH=/usr/local/texlive/2026/bin/x86_64-linux:$PATH
-export MANPATH=/usr/local/texlive/2026/texmf-dist/doc/man:$MANPATH
-export INFOPATH=/usr/local/texlive/2026/texmf-dist/doc/info:$INFOPATH
+# shell behaviour: wanted everywhere, host or nix shell.
 set -o vi
 
-export PATH=$PATH:/usr/local/go/bin
+# host toolchains installed outside the package manager. every line here
+# *prepends* a host directory to PATH, which inside the nix dotfiles shell
+# would shadow the pinned tools with whatever this machine happens to have -
+# so skip the block there. flake.nix exports DOTFILES_SHELL, and it survives
+# into project devshells entered from it. the HOME test is for the same shell
+# before the hook has run: nix sources this file first, with an empty
+# environment, and brew errors out on a missing HOME.
+if [ -z "${DOTFILES_SHELL:-}" ] && [ -n "${HOME:-}" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    export PATH="$HOME/.cargo/bin:$PATH"
+    export PATH="$HOME/.TinyTeX/bin/x86_64-linux:$PATH"
+    export PATH=/usr/local/texlive/2026/bin/x86_64-linux:$PATH
+    export MANPATH=/usr/local/texlive/2026/texmf-dist/doc/man:$MANPATH
+    export INFOPATH=/usr/local/texlive/2026/texmf-dist/doc/info:$INFOPATH
+
+    export PATH=$PATH:/usr/local/go/bin
+
+    # guarded: this file also runs on machines with no homebrew.
+    [ -x /home/linuxbrew/.linuxbrew/bin/brew ] &&
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+fi

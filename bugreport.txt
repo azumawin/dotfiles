@@ -1,0 +1,17 @@
+Failed to run `config` for telescope.nvim
+                                                                                
+...m/lazy/telescope.nvim/lua/telescope/_extensions/init.lua:10: 'fzf' extension 
+doesn't exist or isn't installed: ...hare/nvim/lazy/telescope-fzf-native.nvim/lu
+a/fzf_lib.lua:11: /home/azuma/.local/share/nvim/lazy/telescope-fzf-native.nvim/l
+ua/../build/libfzf.so: cannot open shared object file: No such file or directory
+                                                                                
+                                                                                
+# stacktrace:                                                                   
+  - /telescope.nvim/lua/telescope/_extensions/init.lua:10 _in_ **load_extension*
+*                                                                               
+  - /telescope.nvim/lua/telescope/_extensions/init.lua:62 _in_ **load_extension*
+*                                                                               
+  - ~/.config/nvim/lua/plugins/telescope.lua:79 _in_ **config**                 
+  - /nix/store/mgpsjh2fja1iylqmlg6vhbybyll8ixk7-hm_nvim/init.lua:32
+
+fzf --version worked in cli so telescope wasnt finding it somehow. it was debian13 trixie on 86x64 and the steps i did were: installed git and curl from apt repo then cloned the repo and ran the nix run command at the bottom of the readme in the repo
