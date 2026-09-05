@@ -1,0 +1,10 @@
+{
+  "model": "opus",
+  "tui": "default",
+  "theme": "dark-daltonized",
+  "permissions": {
+    "deny": [
+      "Read(**/.env)"
+      ]
+    }
+}

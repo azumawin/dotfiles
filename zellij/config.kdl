@@ -304,7 +304,8 @@ default_mode "locked"
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+// one compact-bar row instead of separate tab-bar + status-bar rows
+default_layout "compact"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -386,7 +387,7 @@ pane_frames false
  
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
-scrollback_editor "/home/azuma/.local/bin/nvim"
+scrollback_editor "/home/azuma/.nix-profile/bin/nvim"
  
 // A fixed name to always give the Zellij session.
 // Consider also setting `attach_to_session true,`
@@ -502,6 +503,11 @@ scrollback_editor "/home/azuma/.local/bin/nvim"
 // Default: true
 // 
 stacked_resize false
+
+// 0.45 defaults this to true, which piles every collapsed pane title at the
+// top of the screen and pins the expanded pane below them. false restores the
+// 0.43 placement (titles spread above/below the expanded pane).
+stacked_pane_list false
  
 // Whether to show tips on startup
 // Default: true

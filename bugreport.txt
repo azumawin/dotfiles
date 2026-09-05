@@ -14,4 +14,6 @@ ua/../build/libfzf.so: cannot open shared object file: No such file or directory
   - ~/.config/nvim/lua/plugins/telescope.lua:79 _in_ **config**                 
   - /nix/store/mgpsjh2fja1iylqmlg6vhbybyll8ixk7-hm_nvim/init.lua:32
 
-fzf --version worked in cli so telescope wasnt finding it somehow. it was debian13 trixie on 86x64 and the steps i did were: installed git and curl from apt repo then cloned the repo and ran the nix run command at the bottom of the readme in the repo
+fzf --version worked in cli so telescope wasnt finding it somehow. it was debian13 trixie on 86x64 and the steps i did were: installed git and curl from apt repo then cloned the repo and ran `nix run home-manager/master -- switch --flake .#azuma` then launched nvim
+
+solution: add gcc and gnumake packages to home.nix, it turns out fzf i was testing in cli is different package from the library that telescope was trying to build, but it couldnt because there was no build-essentials in the user space so it failed silently.

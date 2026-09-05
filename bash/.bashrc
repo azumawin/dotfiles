@@ -8,15 +8,6 @@ case $- in
       *) return;;
 esac
 
-# `nix develop` sources ~/.bashrc from its generated rcfile, and the dotfiles
-# flake sources this file again from its shellHook once HOME and friends are
-# back. bail on the second pass. deliberately not exported, so a nested project
-# devshell still gets its own fresh pass.
-if [ -n "${DOTFILES_BASHRC_SOURCED:-}" ]; then
-    return
-fi
-DOTFILES_BASHRC_SOURCED=1
-
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -116,41 +107,29 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
 # shell behaviour: wanted everywhere, host or nix shell.
 set -o vi
 
-# host toolchains installed outside the package manager. every line here
-# *prepends* a host directory to PATH, which inside the nix dotfiles shell
-# would shadow the pinned tools with whatever this machine happens to have -
-# so skip the block there. flake.nix exports DOTFILES_SHELL, and it survives
-# into project devshells entered from it. the HOME test is for the same shell
-# before the hook has run: nix sources this file first, with an empty
-# environment, and brew errors out on a missing HOME.
-if [ -z "${DOTFILES_SHELL:-}" ] && [ -n "${HOME:-}" ]; then
-    export PATH="$HOME/.local/bin:$PATH"
+# home manager session variables - XDG_DATA_DIRS for desktop entries and the
+# rest of what targets.genericLinux sets up. bash isn't managed by
+# programs.bash, so nothing sources this for us.
+if [ -f "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+    . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+fi
 
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-    export PATH="$HOME/.cargo/bin:$PATH"
-    export PATH="$HOME/.TinyTeX/bin/x86_64-linux:$PATH"
-    export PATH=/usr/local/texlive/2026/bin/x86_64-linux:$PATH
-    export MANPATH=/usr/local/texlive/2026/texmf-dist/doc/man:$MANPATH
-    export INFOPATH=/usr/local/texlive/2026/texmf-dist/doc/info:$INFOPATH
+# the one host path worth keeping: pip/pipx/cargo-install style user binaries.
+export PATH="$HOME/.local/bin:$PATH"
 
-    export PATH=$PATH:/usr/local/go/bin
+# ~/.profile also prepends ~/.local/bin at login, ahead of the nix profile, so
+# anything installed there would shadow a nix-provided binary of the same name.
+# put nix back in front.
+export PATH="$HOME/.nix-profile/bin:$PATH"
 
-    # guarded: this file also runs on machines with no homebrew.
-    [ -x /home/linuxbrew/.linuxbrew/bin/brew ] &&
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+# programmable completion, from the nix profile rather than the host. sourced
+# last: its lazy loader looks up per-command completions through XDG_DATA_DIRS,
+# which hm-session-vars.sh sets above.
+if ! shopt -oq posix; then
+    if [ -f "$HOME/.nix-profile/share/bash-completion/bash_completion" ]; then
+        . "$HOME/.nix-profile/share/bash-completion/bash_completion"
+    fi
 fi

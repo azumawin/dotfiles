@@ -25,6 +25,10 @@ return {
                     { "ruff", version = "0.16.5" },
                     { "black", version = "26.5.1" },
 
+                    -- Nix
+                    { "nil", version = "2025-06-13" },
+                    { "nixfmt", version = "v1.4.0" },
+
                     -- C / C++
                     { "clangd", version = "22.1.6" },
                     { "clang-format", version = "23.1.0" },
