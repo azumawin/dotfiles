@@ -13,6 +13,9 @@ Note that this config is made with rollbackability in mind so interactively edit
 like `~/.claude/settings.json` through claude for example, wont work because the file claude will
 try to edit is the current config generation which is inside the readonly `/nix/store/`
 
+Note that it's assumed that these dotfiles live at `~/dotfiles`, some things may break otherwise,
+for example nvim config keymap.
+
 # Requirements
 
 packages:
@@ -37,9 +40,6 @@ note that some distros ship a default bash config, so even on a clean install yo
 it or use a `-b backup` flag - which will append a `.backup` extension to the existing file and
 place the file from this repo as the active one (only use it on the first run tho)
 
-fonts are installed by home manager, so nothing needs to be on the host for kitty or the nerd font
-glyphs in nvim/zellij to render.
-
 # Bootstrapping
 
 ```
@@ -48,17 +48,15 @@ cd ~/dotfiles
 nix run home-manager/master -- switch --flake .#azuma
 ```
 
-note this bootstraps with home manager `master`, not the revision pinned in `flake.lock` - only the
-very first activation, every switch after this uses the pinned one.
-
 # Versioning your config after bootstrapping
 
-open a new shell first: `home-manager` lives in `~/.nix-profile/bin`, which the `.bashrc` from this
-repo puts on `PATH`, so it isn't there yet in the shell you bootstrapped from.
+make config changes only in this repo and NOT in `~/.config/` since the symlinks there point to read
+only `/nix/store`
 
-after making a change to the config you must do:
+after making a change do:
 
 ```
+cd ~/dotfiles
 home-manager switch --flake .#azuma
 ```
 

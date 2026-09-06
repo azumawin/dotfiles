@@ -12,7 +12,12 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, nixgl, ... }:
+    {
+      nixpkgs,
+      home-manager,
+      nixgl,
+      ...
+    }:
     let
       system = "x86_64-linux";
       # claude-code is unfree, so nixpkgs needs instantiating with a config
@@ -20,8 +25,7 @@
       # allowUnfree so nothing else slips in unnoticed.
       pkgs = import nixpkgs {
         inherit system;
-        config.allowUnfreePredicate =
-          pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
+        config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
       };
     in
     {

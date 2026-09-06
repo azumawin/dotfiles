@@ -65,7 +65,8 @@ function M.diff_original()
     if vim.wo.diff then
         vim.cmd("diffoff | only")
     else
-        vim.cmd("DiffOrig")
+        vim.cmd("vert new | set bt=nofile | r ++edit # | 0d_ | diffthis")
+        vim.cmd("wincmd p | diffthis")
     end
 end
 

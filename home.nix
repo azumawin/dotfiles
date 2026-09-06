@@ -1,4 +1,9 @@
-{ config, pkgs, nixgl, ... }:
+{
+  config,
+  pkgs,
+  nixgl,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -6,30 +11,30 @@
   home.username = "azuma";
   home.homeDirectory = "/home/azuma";
 
-# Means link ~/.config/nvim to the contents of ./nvim relative to this file.
+  # Means link ~/.config/nvim to the contents of ./nvim relative to this file.
   xdg.configFile."nvim".source = ./nvim;
   xdg.configFile."zellij".source = ./zellij;
   xdg.configFile."kitty".source = ./kitty;
-# these can be changed interactively via claude, but i shouldn't do that and edit them directly instead so that my config stays completely roll-backable.
+  # these can be changed interactively via claude, but i shouldn't do that and edit them directly instead so that my config stays completely roll-backable.
   home.file.".claude/CLAUDE.md".source = ./claude/CLAUDE.md;
   home.file.".claude/settings.json".source = ./claude/settings.json;
   home.file.".bashrc".source = ./bash/.bashrc;
-# was a leftover stow symlink that only survived because stow made it once. nothing
-# recreated it on a clean bootstrap, so a fresh machine had no git identity at all.
+  # was a leftover stow symlink that only survived because stow made it once. nothing
+  # recreated it on a clean bootstrap, so a fresh machine had no git identity at all.
   home.file.".gitconfig".source = ./gitconfig/.gitconfig;
 
-# mutable symlinks for later if i decide to change it
+  # mutable symlinks for later if i decide to change it
   # home.file.".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/CLAUDE.md";
   # home.file.".claude/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/claude/settings.json";
   # home.file.".bashrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/bash/.bashrc";
 
-# enable nixgl so that nix packaged apps can find opengl where nix would put it
+  # enable nixgl so that nix packaged apps can find opengl where nix would put it
   targets.genericLinux.enable = true;
   targets.genericLinux.nixGL.packages = nixgl.packages;
   targets.genericLinux.nixGL.defaultWrapper = "mesa";
 
-# without this home manager installs the font packages but never registers them
-# with fontconfig, so kitty silently falls back to DejaVu and nerd glyphs are tofu.
+  # without this home manager installs the font packages but never registers them
+  # with fontconfig, so kitty silently falls back to DejaVu and nerd glyphs are tofu.
   fonts.fontconfig.enable = true;
 
   # This value determines the Home Manager release that your configuration is
@@ -43,33 +48,49 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs;[
+  home.packages = with pkgs; [
 
-  # --- editor infrastructure ---
-  ripgrep fd fzf git curl gnutar unzip wget gcc gnumake
+    # --- editor infrastructure ---
+    ripgrep
+    fd
+    fzf
+    git
+    curl
+    gnutar
+    unzip
+    wget
+    gcc
+    gnumake
 
-  # --- shell ---
-  bash-completion
+    # --- shell ---
+    bash-completion
 
-  # --- runtimes and packages that mason needs to install language servers ---
-  nodejs python3 luarocks lua5_1
+    # --- runtimes and packages that mason needs to install language servers ---
+    nodejs
+    python3
+    luarocks
+    lua5_1
 
-  # --- tree-sitter cli - needed for latex ---
-  tree-sitter
+    # --- tree-sitter cli - needed for latex ---
+    tree-sitter
 
-  # --- editor, multiplexer, terminal ---
-  neovim zellij (config.lib.nixGL.wrap pkgs.kitty)
+    # --- editor, multiplexer, terminal ---
+    neovim
+    zellij
+    (config.lib.nixGL.wrap pkgs.kitty)
 
-  # --- fonts ---
-  # cascadia-code is what kitty.conf asks for by name, lilex carries the nerd font
-  # glyphs nvim and zellij draw. previously both were host fonts installed by hand.
-  cascadia-code nerd-fonts.lilex
+    # --- fonts ---
+    # cascadia-code is what kitty.conf asks for by name, lilex carries the nerd font
+    # glyphs nvim and zellij draw. previously both were host fonts installed by hand.
+    cascadia-code
+    nerd-fonts.lilex
 
-  # --- dev tools ---
-  uv claude-code
+    # --- dev tools ---
+    uv
+    claude-code
 
-  # --- media ---
-  yt-dlp
+    # --- media ---
+    yt-dlp
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

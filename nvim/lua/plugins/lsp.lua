@@ -157,7 +157,7 @@ return {
             -- vim.lsp.config("texlab", {})
             -- vim.lsp.config("roslyn", {})
             -- jdtls is meant to be started per buffer so config is in ftplugin/java
-            vim.lsp.enable({ "lua_ls", "ruff", "basedpyright", "roslyn", "texlab", "clangd" })
+            vim.lsp.enable({ "lua_ls", "ruff", "basedpyright", "roslyn", "texlab", "clangd", "nil" })
         end,
     },
 }
