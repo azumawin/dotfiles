@@ -92,3 +92,6 @@ VBoxManage snapshot "debian13" restore pristine
   config problems in ~/dotfiles/
 - use nix to install lsp related packages from mason into home environment and drop the entire mason
   stack from nvim.
+- move latex styles here
+- setup latex snippets eventually
+- move to tmux
