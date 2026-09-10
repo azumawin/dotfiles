@@ -15,6 +15,8 @@
   xdg.configFile."nvim".source = ./nvim;
   xdg.configFile."zellij".source = ./zellij;
   xdg.configFile."kitty".source = ./kitty;
+  xdg.configFile."tmux".source = ./tmux;
+
   # these can be changed interactively via claude, but i shouldn't do that and edit them directly instead so that my config stays completely roll-backable.
   home.file.".claude/CLAUDE.md".source = ./claude/CLAUDE.md;
   home.file.".claude/settings.json".source = ./claude/settings.json;
@@ -77,10 +79,11 @@
     # --- editor, multiplexer, terminal ---
     neovim
     zellij
+    tmux
     (config.lib.nixGL.wrap pkgs.kitty)
 
     # --- fonts ---
-    # cascadia-code is what kitty.conf asks for by name, lilex carries the nerd font
+    # cascadia-mono is what kitty.conf asks for by name, lilex carries the nerd font
     # glyphs nvim and zellij draw. previously both were host fonts installed by hand.
     cascadia-code
     nerd-fonts.lilex
