@@ -16,5 +16,9 @@ local tex_post_write_grp = vim.api.nvim_create_augroup("tex_post_write", { clear
 vim.api.nvim_create_autocmd("BufWritePost", {
     group = tex_post_write_grp,
     pattern = "*.tex",
-    callback = impl.compile_latex_project_current_buffer_belongs_to,
+    callback = function()
+        -- root markers used to find the project root of current latex buffer by searching upwards
+        local root_markers = { ".git", "main.tex" }
+        impl.compile_latex_project_current_buffer_belongs_to(root_markers)
+    end,
 })
