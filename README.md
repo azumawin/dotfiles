@@ -90,8 +90,20 @@ VBoxManage snapshot "debian13" restore pristine
 - improve CLAUDE.md and settings.json with guardrails, i want 2 modes that i could switch between.
   1: can only access current directory. 2: can access whatever is needed, usually when im fixing
   config problems in ~/dotfiles/
+
 - use nix to install lsp related packages from mason into home environment and drop the entire mason
   stack from nvim.
+
 - move latex styles here
+
 - setup latex snippets eventually
+
 - move to tmux
+
+- setup vim fugitive and smth for viewing diffs
+
+- Vim / Neovim (vim-fugitive)If you prefer working entirely in the terminal but want a buffer-based
+  experience, the vim-fugitive plugin is the industry standard.How to use it:Open your project in
+  Vim and type :Gdiffsplit (or :G).This opens a split buffer showing your working copy vs. the
+  index.Visually select the lines you want to stage using V (Visual Line mode).Type :diffput (or use
+  the shortcut dp) to push those lines into the staging buffer. Save and close.
