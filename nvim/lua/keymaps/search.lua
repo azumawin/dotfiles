@@ -7,7 +7,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set({ "x", "n" }, "<leader>rg", impl.project_wide_ripgrep_to_quickfix)
 
 -- Triggers a project-wide replace prompt given a quickfix of ripgrep results
-vim.keymap.set("n", "<leader>r", impl.trigger_replace_on_quickfix)
+vim.keymap.set("n", "<leader>re", impl.trigger_replace_on_quickfix)
 
 -- Buffer-wide find and replace for word under cursor
 vim.keymap.set("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]])
