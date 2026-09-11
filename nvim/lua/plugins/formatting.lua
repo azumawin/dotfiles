@@ -48,6 +48,9 @@ return {
                         "--style={BasedOnStyle: Google, IndentWidth: 4}",
                     },
                 },
+                latexindent = {
+                    prepend_args = { "-g", "out/indent.log" },
+                },
             },
         },
         -- auto format buffer on save, will switch based on filetype detected
