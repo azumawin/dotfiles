@@ -46,6 +46,8 @@ require("lazy").setup({
 
     { import = "plugins.docstrings" },
 
+    { import = "plugins.markdown_preview" },
+
     { "tpope/vim-surround" },
 
     {
