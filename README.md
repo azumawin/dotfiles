@@ -14,7 +14,7 @@ like `~/.claude/settings.json` through claude for example, wont work because the
 try to edit is the current config generation which is inside the readonly `/nix/store/`
 
 Note that it's assumed that these dotfiles live at `~/dotfiles`, some things may break otherwise,
-for example nvim config keymap.
+for example nvim config keymap, also lazy is configured to put lazy-lock.json there.
 
 # Requirements
 
