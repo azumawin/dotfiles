@@ -68,7 +68,8 @@
     # --- shell ---
     bash-completion
 
-    # --- runtimes and packages that mason needs to install language servers ---
+    # --- runtimes that nvim plugins shell out to ---
+    # nodejs is for markdown-preview/live-server, lua5_1+luarocks for lua tooling
     nodejs
     # default libraries like tkinter ship with the interpreter so i need to add them here, very rarely do i encounter this
     (python3.withPackages (ps: with ps; [ tkinter ]))
@@ -77,6 +78,43 @@
 
     # --- tree-sitter cli - needed for latex ---
     tree-sitter
+
+    # --- language servers / formatters / linters ---
+    # these used to be mason-tool-installer's ensure_installed list, pinned per tool.
+    # now they come from nixpkgs, so flake.lock is the single pin for all of them and
+    # nvim just finds them on PATH. nvim/lua/plugins/lsp.lua no longer loads mason.
+
+    # lsp
+    basedpyright
+    pyright # not in vim.lsp.enable, kept because mason had it
+    ruff # doubles as the python linter for nvim-lint
+    lua-language-server
+    nil # nix
+    texlab # latex
+    clang-tools # clangd + clang-format come from the same package
+    rust-analyzer
+    roslyn-ls # c#; roslyn.nvim falls back to Microsoft.CodeAnalysis.LanguageServer on PATH
+    jdt-language-server # ships the `jdtls` wrapper that ftplugin/java.lua launches
+
+    # formatters
+    black
+    nixfmt
+    rustfmt # was the "install via rustup or actually nix" TODO in lsp.lua
+    csharpier
+    google-java-format
+    stylua
+    # the bare texlivePackages.latexindent output ships no bin, it has to come
+    # through a texlive env to get the perl wrapper
+    (texlive.withPackages (ps: [ ps.latexindent ]))
+    mdformat
+    pgformatter # binary is `pg_format`
+    taplo
+    xmlformat # conform's `xmlformatter` just calls `xmlformat -`, which this provides
+    prettier
+
+    # linters
+    lua51Packages.luacheck
+    vale
 
     # --- apps ---
     neovim

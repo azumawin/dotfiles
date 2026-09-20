@@ -5,7 +5,8 @@ change `system` in `flake.nix`. If you're not me, you also need to change `home.
 `home.homeDirectory` in `home.nix`, and `homeConfigurations."azuma"` in `flake.nix` - the name there
 is what you pass after the `#` in `--flake .#azuma`.
 
-Home manager only installs runtimes that nvim-mason requires to install language servers and other
+Home manager installs the language servers, formatters and linters that nvim expects on `PATH`
+(mason is gone - `home.nix` owns that list now and `flake.lock` pins it) plus the runtimes and other
 nvim/zellij/kitty utilities, every other runtime and dev tool should be in a per project
 `flake.nix`.
 
@@ -87,15 +88,14 @@ VBoxManage snapshot "debian13" restore pristine
 
 # TODO
 
+- java setup with ftplugin is deprecated for now, will fix next time i need it.
+
 - i want to learn how to open side panels fast in zellij/tmux and turn it off fast, then turn the
   same one back on without destroying the order
 
 - improve CLAUDE.md and settings.json with guardrails, i want 2 modes that i could switch between.
   1: can only access current directory. 2: can access whatever is needed, usually when im fixing
   config problems in ~/dotfiles/
-
-- use nix to install lsp related packages from mason into home environment and drop the entire mason
-  stack from nvim.
 
 - move latex styles here
 
