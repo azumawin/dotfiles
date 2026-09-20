@@ -54,6 +54,7 @@
 
     # --- editor infrastructure ---
     ripgrep
+    difftastic
     fd
     fzf
     git
@@ -69,19 +70,21 @@
 
     # --- runtimes and packages that mason needs to install language servers ---
     nodejs
-    python3
+    # default libraries like tkinter ship with the interpreter so i need to add them here, very rarely do i encounter this
+    (python3.withPackages (ps: with ps; [ tkinter ]))
     luarocks
     lua5_1
 
     # --- tree-sitter cli - needed for latex ---
     tree-sitter
 
-    # --- editor, multiplexer, terminal ---
+    # --- apps ---
     neovim
     zellij
     tmux
     (config.lib.nixGL.wrap pkgs.kitty)
     (pkgs.callPackage ./hashcards.nix { })
+    (config.lib.nixGL.wrap pkgs.rpi-imager)
 
     # --- fonts ---
     # cascadia-mono is what kitty.conf asks for by name, lilex carries the nerd font
@@ -151,4 +154,5 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.zathura.enable = true;
 }
