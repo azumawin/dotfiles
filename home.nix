@@ -81,6 +81,7 @@
     zellij
     tmux
     (config.lib.nixGL.wrap pkgs.kitty)
+    (pkgs.callPackage ./hashcards.nix { })
 
     # --- fonts ---
     # cascadia-mono is what kitty.conf asks for by name, lilex carries the nerd font
