@@ -29,6 +29,10 @@ return {
                     { "nil", version = "2025-06-13" },
                     { "nixfmt", version = "v1.4.0" },
 
+                    -- Rust
+                    { "rust-analyzer", version = "2026-09-07" },
+                    -- need to install rustfmt via rustup or actually nix.
+
                     -- C / C++
                     { "clangd", version = "22.1.6" },
                     { "clang-format", version = "23.1.0" },
@@ -157,7 +161,17 @@ return {
             -- vim.lsp.config("texlab", {})
             -- vim.lsp.config("roslyn", {})
             -- jdtls is meant to be started per buffer so config is in ftplugin/java
-            vim.lsp.enable({ "lua_ls", "ruff", "basedpyright", "roslyn", "texlab", "clangd", "nil" })
+            -- vim.lsp.enable uses underscores instead of dashes, so rust-analyzer becomes rust_analyzer
+            vim.lsp.enable({
+                "lua_ls",
+                "ruff",
+                "basedpyright",
+                "roslyn",
+                "texlab",
+                "clangd",
+                "nil_ls",
+                "rust_analyzer",
+            })
         end,
     },
 }
