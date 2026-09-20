@@ -87,6 +87,9 @@ VBoxManage snapshot "debian13" restore pristine
 
 # TODO
 
+- i want to learn how to open side panels fast in zellij/tmux and turn it off fast, then turn the
+  same one back on without destroying the order
+
 - improve CLAUDE.md and settings.json with guardrails, i want 2 modes that i could switch between.
   1: can only access current directory. 2: can access whatever is needed, usually when im fixing
   config problems in ~/dotfiles/
