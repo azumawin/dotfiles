@@ -17,30 +17,6 @@ try to edit is the current config generation which is inside the readonly `/nix/
 Note that it's assumed that these dotfiles live at `~/dotfiles`, some things may break otherwise,
 for example nvim config keymap, also lazy is configured to put lazy-lock.json there.
 
-# Requirements
-
-packages:
-
-- git
-- curl
-- [nix determinate installer](https://docs.determinate.systems/)
-
-a bootstrap expects a clean install, so these paths and files must not exist:
-
-```
-~/.config/nvim
-~/.config/zellij
-~/.config/kitty
-~/.claude/CLAUDE.md
-~/.claude/settings.json
-~/.bashrc
-~/.gitconfig
-```
-
-note that some distros ship a default bash config, so even on a clean install you may need to delete
-it or use a `-b backup` flag - which will append a `.backup` extension to the existing file and
-place the file from this repo as the active one (only use it on the first run tho)
-
 # Bootstrapping
 
 ```
@@ -49,44 +25,63 @@ cd ~/dotfiles
 nix run home-manager/master -- switch --flake .#azuma
 ```
 
-# Versioning your config after bootstrapping
+# Creating a generation
 
-make config changes only in this repo and NOT in `~/.config/` since the symlinks there point to read
-only `/nix/store`
+note: cd into dotfiles dir first.
 
-after making a change do:
+system:
 
 ```
-cd ~/dotfiles
+sudo nixos-rebuild switch --flake .#vm
+```
+
+where vm can be changed for the hostname that you wish to create the generation for
+
+user space:
+
+```
 home-manager switch --flake .#azuma
 ```
 
-# Restoring your original config
-
-Home manager won't restore your `.backup` files for you, so you'll have to do it yourself:
-
-- `home-manager uninstall`
-- `mv ~/<file>.backup ~/<file>` for all files/directories you wish to restore
-
-# notes for future me
-
-i used virtualbox with debian 13 iso to test it
-
-make sure the vm is turned off before snapshotting/restoring
-
-commands that i used to snapshot:
-
-```
-VBoxManage snapshot "debian13" take pristine
-```
-
-to restore the snapshot:
-
-```
-VBoxManage snapshot "debian13" restore pristine
-```
-
 # TODO
+
+- apps that have their own config as dotfiles go as packages / etc. apps that have their config
+  through nix fields (for example way easier to configure firefox through nix options) go as
+  program.enable, apps that have no config at all go as packages It collapses to one question. Cases
+  1 and 3 both land on home.packages, so what you've actually got is: is Nix owning this app's
+  config? Yes → programs.X.enable. No (either because you write a dotfile, or because there's no
+  config at all) → home.packages.
+
+  Stated that way it's also self-enforcing, because the failure mode is a real error rather than a
+  style opinion. programs.kitty writes xdg.configFile."kitty/kitty.conf" (kitty.nix:413) and
+  programs.zellij owns its config the same way — enable either and it collides with the
+  xdg.configFile."kitty" / "zellij" entries you already have. The rule isn't just tidiness; the two
+  options are genuinely mutually exclusive per app.
+
+  The one gap: "no config at all → packages" holds only when the module is just an installer. Some
+  modules give you things that aren't config — a systemd user service, a shell hook, cross-program
+  wiring. There the module is worth enabling even with nothing to configure. the weird thing with
+  this is that home-manager should be enabled as a program even tho it has no config i think its an
+  exception tho because of the wiring or smth. i need to more strictly define the logic of which way
+  to use to install software on nix depending on: does nix own the config? is it meant to exist for
+  this user or for the whole system? then i like to group tools that could potentially be owned by
+  nix in the future in apps.nix under a different comment
+
+- flake.nix should determine my system from hardware-configuration.nix or something, i shouldnt have
+  to hardcode it.
+
+- i put some things in programs.enable and some things as packages, i decided randomly so thats not
+  good and need to fix.
+
+- will need to update lazy lockfile location in init.lua:58 becuase i changed the dotfile structure,
+  i need to think of a better solution than currently, either put all stuff like this that expects a
+  specific thing into one file, document it, or figure out something smarter.
+
+- will need to change nvim <leader>fc dir to point to correct location of dotfiles sinc ei updated
+  it
+
+- i dont like the awkward tension of installing runtimes per project but installing lsps globally
+  into my user space, idk yet what the right thing to do here is.
 
 - java setup with ftplugin is deprecated for now, will fix next time i need it.
 
