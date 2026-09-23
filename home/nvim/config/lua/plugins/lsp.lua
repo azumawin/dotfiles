@@ -1,9 +1,5 @@
 return {
     {
-        "seblyng/roslyn.nvim",
-        opts = {},
-    },
-    {
         "mfussenegger/nvim-jdtls",
         ft = "java",
     },
@@ -50,7 +46,7 @@ return {
                 "lua_ls",
                 "ruff",
                 "basedpyright",
-                "roslyn",
+                "roslyn_ls",
                 "texlab",
                 "clangd",
                 "nil_ls",
