@@ -45,6 +45,10 @@ home-manager switch --flake .#azuma
 
 # TODO
 
+- put all kde tarballs in this repo so any machine can use them, just like images.
+
+- push both pc and laptop to github and resolve conflicts
+
 - fix nvim/lazy-lock.json in root dir
 
 - track brave config in a json as well
