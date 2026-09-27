@@ -14,9 +14,9 @@
     gcc
     gnumake
     yt-dlp
+    btop
 
     # config potentially owned by nix
-    firefox
     zathura
     (pkgs.callPackage ../pkgs/hashcards.nix { })
     rpi-imager

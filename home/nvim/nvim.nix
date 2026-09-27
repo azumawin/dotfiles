@@ -6,11 +6,6 @@
 {
   xdg.configFile."nvim".source = ./config;
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-  };
-
   home.packages = with pkgs; [
     neovim
 

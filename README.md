@@ -45,6 +45,10 @@ home-manager switch --flake .#azuma
 
 # TODO
 
+- fix nvim/lazy-lock.json in root dir
+
+- track brave config in a json as well
+
 - apps that have their own config as dotfiles go as packages / etc. apps that have their config
   through nix fields (for example way easier to configure firefox through nix options) go as
   program.enable, apps that have no config at all go as packages It collapses to one question. Cases

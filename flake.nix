@@ -8,34 +8,22 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
+    inputs@{ nixpkgs, ... }:
     {
-      nixpkgs,
-      home-manager,
-      ...
-    }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in
-    {
-
-      nixosConfigurations.vm = nixpkgs.lib.nixosSystem {
-        modules = [ ./hosts/vm/configuration.nix ];
-      };
-      homeConfigurations."azuma" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home/default.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+      nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/laptop/configuration.nix
+          ./home-manager/home-manager.nix
+        ];
       };
     };
 }
