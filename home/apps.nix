@@ -21,5 +21,7 @@
     (pkgs.callPackage ../pkgs/hashcards.nix { })
     rpi-imager
 
+    (pkgs.callPackage ../pkgs/nothing-theme.nix { })
+    whitesur-cursors
   ];
 }
