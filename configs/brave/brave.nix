@@ -1,4 +1,3 @@
-{ ... }:
 {
   programs.brave.enable = true;
 }

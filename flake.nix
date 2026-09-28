@@ -22,14 +22,14 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/laptop/configuration.nix
-          ./home-manager/home-manager.nix
+          ./hosts/laptop/home-manager.nix
         ];
       };
       nixosConfigurations.pc = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/pc/configuration.nix
-          ./home-manager/home-manager.nix
+          ./hosts/pc/home-manager.nix
         ];
       };
     };

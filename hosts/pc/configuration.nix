@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "azuma-pc"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -81,21 +81,15 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-      kdePackages.kate
-      discord
-      fastfetch
-      prismlauncher
-      #  thunderbird
-    ];
+    # packages = with pkgs; [
+    #   #  thunderbird
+    # ];
   };
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
-  # Install firefox.
-  programs.firefox.enable = true;
-  programs.git.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -106,11 +100,7 @@
     modesetting.enable = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-  environment.systemPackages = with pkgs; [
-    vim-full
-    difftastic
-    xclip
-  ];
+
   programs.steam.enable = true;
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).

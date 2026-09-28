@@ -7,6 +7,6 @@
     useUserPackages = true;
     backupFileExtension = "backup";
     extraSpecialArgs = { inherit inputs; };
-    users.azuma = import ../home/default.nix;
+    users.azuma = import ./home.nix;
   };
 }
