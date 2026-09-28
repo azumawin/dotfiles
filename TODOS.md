@@ -1,11 +1,5 @@
 # TODO
 
-- fix nvim/lazy-lock.json in root dir
-
-- will need to update lazy lockfile location in init.lua:58 becuase i changed the dotfile structure,
-  i need to think of a better solution than currently, either put all stuff like this that expects a
-  specific thing into one file, document it, or figure out something smarter.
-
 - will need to change nvim <leader>fc dir to point to correct location of dotfiles sinc ei updated
   it
 

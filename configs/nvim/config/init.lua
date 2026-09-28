@@ -55,4 +55,4 @@ require("lazy").setup({
         event = "InsertEnter",
         config = true,
     },
-}, { lockfile = vim.fn.expand("~/dotfiles/nvim/lazy-lock.json") })
+}, { lockfile = vim.fn.expand("~/dotfiles/configs/nvim/config/lazy-lock.json") })
