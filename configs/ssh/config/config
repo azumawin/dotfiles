@@ -1,0 +1,11 @@
+Host azumawin
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_azumawin
+    IdentitiesOnly yes
+
+Host azuolasma
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_azuolasma
+    IdentitiesOnly yes

@@ -10,6 +10,7 @@
     ../../configs/git/git.nix
     ../../configs/plasma-manager/plasma-manager.nix
     ../../configs/brave/brave.nix
+    ../../configs/ssh/ssh.nix
   ];
 
   home.packages = with pkgs; [
