@@ -42,6 +42,8 @@
     plasma-browser-integration
     konsole
     elisa
+    kate
+    ktexteditor
   ];
 
   environment.sessionVariables = {
