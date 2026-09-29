@@ -91,5 +91,34 @@
         ];
       }
     ];
+    # make sure the function key rows are flipped and f1, f2, ... are primary keys instead of assigned mute volume, etc.
+    shortcuts = {
+      kwin = {
+        # Release Meta+Left/Right from window quick-tiling so the desktop
+        # switcher can claim them; KDE silently drops the loser otherwise.
+        "Window Quick Tile Left" = [ ];
+        "Window Quick Tile Right" = [ ];
+
+        "Switch One Desktop to the Left" = "Meta+Left";
+        "Switch One Desktop to the Right" = "Meta+Right";
+
+        "Switch to Desktop 1" = [
+          "Meta+F1"
+          "Ctrl+F1"
+        ];
+        "Switch to Desktop 2" = [
+          "Meta+F2"
+          "Ctrl+F2"
+        ];
+        "Switch to Desktop 3" = [
+          "Meta+F3"
+          "Ctrl+F3"
+        ];
+        "Switch to Desktop 4" = [
+          "Meta+F4"
+          "Ctrl+F4"
+        ];
+      };
+    };
   };
 }
