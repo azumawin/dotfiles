@@ -28,8 +28,9 @@
     yt-dlp
     btop
 
-    # theme
+    # themes
     (pkgs.callPackage ../../pkgs/nothing-theme.nix { })
+    (pkgs.callPackage ../../pkgs/blackglass-theme.nix { })
     whitesur-cursors
 
     discord

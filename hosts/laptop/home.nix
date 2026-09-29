@@ -33,8 +33,9 @@
     (pkgs.callPackage ../../pkgs/hashcards.nix { })
     rpi-imager
 
-    # theme
+    # themes
     (pkgs.callPackage ../../pkgs/nothing-theme.nix { })
+    (pkgs.callPackage ../../pkgs/blackglass-theme.nix { })
     whitesur-cursors
 
   ];
