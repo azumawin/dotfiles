@@ -1,5 +1,16 @@
 # TODO
 
+- replace default login screen with nixos just like locked one
+
+- add keybind to tab to desktop and remove stuff from desktop
+
+- add a command to build generation
+
+- add a command to refresh kde
+
+- add command to init flake templates so i dont have to copy them manually when starting a new
+  project
+
 - move latex styles here
 
 - add proper CLAUDE.md and settings.json, guardrails
@@ -9,8 +20,6 @@
 
 - setup vim fugitive for more granular staging
 
-- track brave config in a json as well
-
 - java setup with ftplugin is deprecated for now, will fix next time i need it.
 
 - i want to learn how to open side panels fast in zellij/tmux and turn it off fast, then turn the
@@ -19,3 +28,5 @@
 - setup latex snippets eventually
 
 - move to tmux
+
+- track brave config in a json as well
