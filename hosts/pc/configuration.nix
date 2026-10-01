@@ -82,6 +82,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     # packages = with pkgs; [
     #   #  thunderbird
@@ -134,6 +135,15 @@
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
   # system.copySystemConfiguration = true;
+
+  # Enable the Docker daemon
+  virtualisation.docker.enable = true;
+
+  # Enable rootless mode so it doesn't run as root
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

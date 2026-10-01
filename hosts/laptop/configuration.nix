@@ -104,6 +104,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     # packages = with pkgs; [
     #   kdePackages.kate
@@ -144,6 +145,15 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  # Enable the Docker daemon
+  virtualisation.docker.enable = true;
+
+  # Enable rootless mode so it doesn't run as root
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
