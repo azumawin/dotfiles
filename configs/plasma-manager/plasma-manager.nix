@@ -120,5 +120,14 @@
         ];
       };
     };
+
+    kwin.virtualDesktops = {
+      names = [
+        "Main"
+        "Code"
+        "Docs/Notes"
+      ];
+      rows = 1;
+    };
   };
 }
