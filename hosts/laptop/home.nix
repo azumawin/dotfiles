@@ -32,6 +32,7 @@
     obsidian
     (pkgs.callPackage ../../pkgs/hashcards.nix { })
     rpi-imager
+    discord
 
     # themes
     (pkgs.callPackage ../../pkgs/nothing-theme.nix { })
