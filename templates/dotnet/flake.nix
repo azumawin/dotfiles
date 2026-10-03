@@ -6,6 +6,7 @@
     let
       systems = [
         "x86_64-linux"
+        "x86_64-darwin"
         "aarch64-linux"
         "aarch64-darwin"
       ];
@@ -17,7 +18,7 @@
           packages = with pkgs; [
             dotnet-sdk_10
             roslyn-ls
-            csharpier
+            # csharpier is owned by dotnet so it's versioned by dotnet-tools
           ];
         };
       });

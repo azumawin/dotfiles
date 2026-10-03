@@ -32,5 +32,17 @@
           ./hosts/pc/home-manager.nix
         ];
       };
+
+      templates = {
+        dotnet = {
+          path = ./templates/dotnet;
+          description = ".NET dev shell";
+        };
+        python = {
+          path = ./templates/python;
+          description = "Python dev shell";
+        };
+      };
     };
+
 }

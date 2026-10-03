@@ -1,6 +1,17 @@
 in this dir ill put flake templates, depending on ecosystem used so that i can get started with a
-project straight away. below are the packages that i used to have installed that i decided to
-seperate from my global config into per-project flakes:
+project straight away.
+
+checking if it activated:
+
+```
+whereis python
+```
+
+note that since i added a flake.lock, the devshell is resolved against that so it's always the same
+unless u do `nix flake update`
+
+below are the packages that i used to have installed that i decided to seperate from my global
+config into per-project flakes:
 
 ```
 # language servers (note that the some language servers are also linters, so it can overlap)
@@ -27,4 +38,11 @@ prettier
 # linters
 lua51Packages.luacheck
 vale
+```
+
+template usage:
+
+```
+mkdir myproj && cd myproj
+nix flake init -t ~/dotfiles#python
 ```
