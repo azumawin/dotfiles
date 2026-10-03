@@ -4,12 +4,7 @@
 
 - add keybind to tab to desktop and remove stuff from desktop
 
-- add a command to build generation
-
 - add a command to refresh kde
-
-- add command to init flake templates so i dont have to copy them manually when starting a new
-  project
 
 - move latex styles here
 
