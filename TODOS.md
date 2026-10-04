@@ -1,5 +1,13 @@
 # TODO
 
+- add a README.md inside python templates folder to explain the chosen split: what flake.nix manages
+  and what uv manages and reasoning
+
+- add system libraries to python flake.nix - but why not just use buildfhsenv over nix-ld - ig bcus
+  buildfhsenv is heavier and doesnt work with direnv?
+
+- add direnv
+
 - replace default login screen with nixos just like locked one
 
 - add keybind to tab to desktop and remove stuff from desktop
