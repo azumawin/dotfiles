@@ -10,6 +10,9 @@ whereis python
 note that since i added a flake.lock, the devshell is resolved against that so it's always the same
 unless u do `nix flake update`
 
+also note that this requires `nix-ld` enabled since language package managers like pip download
+pre-compiled binaries
+
 below are the packages that i used to have installed that i decided to seperate from my global
 config into per-project flakes:
 
