@@ -40,6 +40,10 @@
           path = ./templates/python;
           description = "Python dev shell";
         };
+        latex = {
+          path = ./templates/latex;
+          description = "LaTeX dev shell";
+        };
       };
     };
 

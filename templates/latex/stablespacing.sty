@@ -1,0 +1,49 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{stablespacing}[2025/09/14 Stable vertical spacing + keep-together]
+
+% Dependencies (use \RequirePackage inside .sty, not \usepackage)
+\RequirePackage{etoolbox}
+\RequirePackage{enumitem}
+\RequirePackage{needspace}
+\RequirePackage{environ}
+
+% Optional package option: \usepackage[raggedbottom]{stablespacing}
+\newif\ifss@ragged
+\DeclareOption{raggedbottom}{\ss@raggedtrue}
+\ProcessOptions\relax
+\AtBeginDocument{\ifss@ragged\raggedbottom\fi}
+
+% --- Lists: fixed, non-stretchy spacing (run after classes reset things) ---
+\AtBeginDocument{%
+  \setlist{topsep=0pt, partopsep=0pt, parsep=0pt}%
+  \setlist[itemize]{itemsep=.35em}%
+  \setlist[enumerate]{itemsep=.35em}%
+}
+
+% --- Displays: make math skips stable (no stretch) ---
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{.8\baselineskip}%
+  \setlength{\belowdisplayskip}{.8\baselineskip}%
+  \setlength{\abovedisplayshortskip}{.5\baselineskip}%
+  \setlength{\belowdisplayshortskip}{.5\baselineskip}%
+  % (Setting with \setlength already removes plus/minus stretch)
+}
+
+% --- Widow/orphan control ---
+\AtBeginDocument{%
+  \clubpenalty=10000
+  \widowpenalty=10000
+  \displaywidowpenalty=10000
+}
+
+% --- Generic wrapper: keep whole block on one page if it fits; else let it split ---
+\NewEnviron{keeptogether}{%
+  \par
+  \setbox0=\vbox{\hsize=\linewidth \BODY}%
+  \ifdim\dimexpr\ht0+\dp0\relax > \textheight
+    \noindent\BODY % too tall: typeset normally, allow page breaks
+  \else
+    \needspace{\dimexpr\ht0+\dp0\relax}%
+    \noindent\unvbox0%
+  \fi
+}

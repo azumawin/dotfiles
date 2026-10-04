@@ -1,0 +1,332 @@
+\ProvidesPackage{azuma}[2025/04/03 Custom theorem and problem environments]
+
+% Add "azuma" to everything to make sure these options don't collide with external packages
+\newif\ifazumalithuanian
+\DeclareOption{lithuanian}{\azumalithuaniantrue}
+
+\ProcessOptions\relax
+
+% Required packages
+\RequirePackage{amsthm}
+\RequirePackage{thmtools}
+\RequirePackage[framemethod=TikZ]{mdframed}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{amsmath, amssymb}
+\RequirePackage{iftex}
+\RequirePackage{epigraph}
+\RequirePackage{etoolbox}
+\RequirePackage[colorlinks=true,pdfusetitle]{hyperref}
+\RequirePackage{graphicx}
+\graphicspath{{images/}}
+\renewcommand{\epigraphsize}{\scriptsize}
+\renewcommand{\epigraphwidth}{60ex}
+
+\ifluatex
+    \RequirePackage{fontspec}
+\fi
+
+\@ifundefined{KOMAClassName}{
+    % if non-KOMA class
+    \RequirePackage{fancyhdr}
+}{
+    % if KOMA class
+    \RequirePackage[headsepline]{scrlayer-scrpage}
+    \@ifclassloaded{scrbook}{
+        \RequirePackage[a4paper, margin=1in]{geometry} % center margins
+    }{}
+    \@ifclassloaded{scrartcl}{
+        \RequirePackage[T1]{fontenc}
+    }
+}
+
+% -------------------------------------------
+% MAIN SETUP
+% -------------------------------------------
+\author{Ąžuolas Majauskas}
+\date{\today}
+
+% -------------------------------------------
+% MDF DEFINE STYLE
+% -------------------------------------------
+\mdfdefinestyle{mdbluebox}{
+    roundcorner=10pt,
+    linewidth=1pt,
+    skipabove=12pt,
+    innerbottommargin=9pt,
+    skipbelow=2pt,
+    linecolor=blue,
+    nobreak=true,
+    backgroundcolor=TealBlue!5,
+}
+
+\mdfdefinestyle{mdgreenbox}{
+    skipabove=8pt,
+    skipbelow=0pt,
+    linewidth=2pt,
+    rightline=false,
+    leftline=true,
+    topline=false,
+    bottomline=false,
+    linecolor=ForestGreen,
+    backgroundcolor=ForestGreen!5,
+}
+
+\mdfdefinestyle{mdredbox}{
+    %frametitle={\color{RawSienna}\bfseries Example}, % seperate heading from body
+    linewidth=0.5pt,
+    skipabove=12pt,
+    frametitleaboveskip=5pt,
+    frametitlebelowskip=0pt,
+    skipbelow=2pt,
+    frametitlefont=\bfseries,
+    innertopmargin=4pt,
+    innerbottommargin=8pt,
+    nobreak=true,
+    backgroundcolor=Salmon!5,
+    linecolor=RawSienna,
+}
+
+\mdfdefinestyle{mdblackbox}{
+    skipabove=8pt,
+    linewidth=3pt,
+    rightline=false,
+    leftline=true,
+    topline=false,
+    bottomline=false,
+    linecolor=black,
+    backgroundcolor=RedViolet!5!gray!5,
+}
+
+% -------------------------------------------
+% DECLARE THEOREM STYLE
+% -------------------------------------------
+\declaretheoremstyle[
+    headfont=\sffamily\bfseries\color{MidnightBlue},
+    mdframed={style=mdbluebox},
+    headpunct={\\[3pt]},
+    postheadspace={0pt}
+]{thmbluebox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{ForestGreen!70!black},
+    bodyfont=\normalfont,
+    spaceabove=2pt,
+    spacebelow=1pt,
+    mdframed={style=mdgreenbox},
+    headpunct={ --- },
+]{thmgreenbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\color{RawSienna},
+    mdframed={style=mdredbox},
+    headpunct={\\[3pt]},
+    postheadspace={0pt},
+]{thmredbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries,
+    bodyfont=\normalfont\small,
+    spaceabove=0pt,
+    spacebelow=0pt,
+    mdframed={style=mdblackbox}
+]{thmblackbox}
+
+\declaretheoremstyle[
+    headfont=\color{blue!40!black}\normalfont\bfseries,
+    spaceabove=8pt,
+    spacebelow=8pt,
+    bodyfont=\normalfont
+]{basehead}
+
+% -------------------------------------------
+% DECLARE THEOREM
+% -------------------------------------------
+\ifazumalithuanian
+    % LITHUANIAN THEOREMS
+    % Numbered versions of theorems/environments
+    \declaretheorem[style=thmbluebox, name=Hipotezė]{conjecture}
+    \declaretheorem[style=thmbluebox, name=Lemma]{lemma}
+    \declaretheorem[style=thmbluebox, name=Teorema]{theorem}
+    \declaretheorem[style=thmbluebox, name=Išvada]{corollary}
+    \declaretheorem[style=thmgreenbox, name=Teiginys]{claim}
+    \declaretheorem[style=thmredbox, name=Pavyzdys]{example}
+    \declaretheorem[style=thmblackbox, name=Pastaba]{remark}
+    \declaretheorem[style=basehead, name=Apibrėžimas]{definition}
+    \declaretheorem[style=basehead, name=Problema]{problem}
+
+    % Non-numbered versions of theorems/environments
+    \declaretheorem[style=thmbluebox, name=Hipotezė, numbered=no]{conjecture*}
+    \declaretheorem[style=thmbluebox, name=Lemma, numbered=no]{lemma*}
+    \declaretheorem[style=thmbluebox, name=Teorema, numbered=no]{theorem*}
+    \declaretheorem[style=thmbluebox, name=Išvada, numbered=no]{corollary*}
+    \declaretheorem[style=thmgreenbox, name=Teiginys, numbered=no]{claim*}
+    \declaretheorem[style=thmredbox, name=Pavyzdys, numbered=no]{example*}
+    \declaretheorem[style=thmblackbox, name=Pastaba, numbered=no]{remark*}
+    \declaretheorem[style=basehead, name=Apibrėžimas, numbered=no]{definition*}
+    \declaretheorem[style=basehead, name=Problema, numbered=no]{problem*}
+    \newenvironment{solution}{\begin{proof}[Sprendimas]}{\end{proof}}
+    \newenvironment{solutionNewline}{\begin{proof}[Sprendimas]\mbox{}\par\noindent}{\end{proof}}
+    \newenvironment{boxedsolution}{\begin{mdframed}[skipabove=12pt, skipbelow=12pt]\emph{Sprendimas.}}{\end{mdframed}}
+\else
+    % ENGLISH THEOREMS
+    % Numbered versions of theorems/environments
+    \declaretheorem[style=thmbluebox, name=Conjecture]{conjecture}
+    \declaretheorem[style=thmbluebox, name=Lemma]{lemma}
+    \declaretheorem[style=thmbluebox, name=Theorem]{theorem}
+    \declaretheorem[style=thmbluebox, name=Corollary]{corollary}
+    \declaretheorem[style=thmgreenbox, name=Claim]{claim}
+    \declaretheorem[style=thmredbox, name=Example]{example}
+    \declaretheorem[style=thmblackbox, name=Remark]{remark}
+    \declaretheorem[style=basehead, name=Definition]{definition}
+    \declaretheorem[style=basehead, name=Problem]{problem}
+
+    % Non-numbered versions of theorems/environments
+    \declaretheorem[style=thmbluebox, name=Conjecture]{conjecture*}
+    \declaretheorem[style=thmbluebox, name=Lemma, numbered=no]{lemma*}
+    \declaretheorem[style=thmbluebox, name=Theorem, numbered=no]{theorem*}
+    \declaretheorem[style=thmbluebox, name=Corollary, numbered=no]{corollary*}
+    \declaretheorem[style=thmgreenbox, name=Claim, numbered=no]{claim*}
+    \declaretheorem[style=thmredbox, name=Example, numbered=no]{example*}
+    \declaretheorem[style=thmblackbox, name=Remark, numbered=no]{remark*}
+    \declaretheorem[style=basehead, name=Definition, numbered=no]{definition*}
+    \declaretheorem[style=basehead, name=Problem, numbered=no]{problem*}
+    \newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+    \newenvironment{solutionNewline}{\begin{proof}[Sprendimas]\mbox{}\par\noindent}{\end{proof}}
+    \newenvironment{boxedsolution}{\begin{mdframed}[skipabove=12pt, skipbelow=12pt]\emph{Solution.}}{\end{mdframed}}
+\fi
+
+
+% -------------------------------------------
+% UNICODE/FONT STUFF
+% -------------------------------------------
+\ifluatex
+    \setmainfont{lmroman10-regular}[
+        BoldFont=lmroman10-bold,
+        ItalicFont=lmroman10-italic,
+        BoldItalicFont=lmroman10-bolditalic,
+        SlantedFont=lmromanslant10-regular,
+        BoldSlantedFont=lmromanslant10-bold,
+        SmallCapsFont=lmromancaps10-regular,
+        %RawFeature={fallback=evans_fallbacks}
+    ]
+    \setsansfont{lmsans10-regular}[
+        BoldFont=lmsans10-bold,
+        ItalicFont=lmsans10-oblique,
+        BoldItalicFont=lmsans10-boldoblique,
+        %RawFeature={fallback=evans_fallbacks}
+    ]
+\else
+    % if engine isn't luatex then use some other presets
+\fi
+
+% -------------------------------------------
+% IDK
+% -------------------------------------------
+\@ifundefined{KOMAClassName}{
+    % if document class is NOT of type KOMA
+    % do nothing
+}{
+    % if document class is of type KOMA (scrartcl, scrbook)
+    \@ifundefined{chapter}{
+        % if chapter is not defined
+        % do nothing
+    }{
+        % if chapter is defined
+        \addtokomafont{partprefix}{\rmfamily}
+        \renewcommand*{\partformat}{\color{purple}
+        \scalebox{2.5}{\thepart}\enlargethispage{2em}}
+        \addtokomafont{chapterprefix}{\raggedleft}
+        \RedeclareSectionCommand[beforeskip=0.5em]{chapter}
+        \renewcommand*{\chapterformat}{\mbox{%
+        \scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
+        \scalebox{2.718}{\color{purple}\thechapter}\enskip}}
+    }
+    \renewcommand*{\sectionformat}{\color{purple}\S\thesection\enskip}
+    \renewcommand*{\subsectionformat}{\color{purple}\S\thesubsection\enskip}
+    \renewcommand*{\subsubsectionformat}{\color{purple}\S\thesubsubsection\enskip}
+    \addtokomafont{paragraph}{\color{orange!35!black}\P\ }
+    \KOMAoptions{numbers=noenddot}
+    %\usetocstyle{KOMAlike}
+}
+
+% -------------------------------------------
+% MAKETITLE
+% -------------------------------------------
+\@ifundefined{KOMAClassName}{}{   
+    \addtokomafont{subtitle}{\Large}
+    \setkomafont{author}{\Large\scshape}
+    \setkomafont{date}{\Large\normalsize}
+}
+\providecommand{\thetitle}{\@title}
+\providecommand{\theauthor}{\@author}
+\providecommand{\thedate}{\@date}
+
+% -------------------------------------------
+% PAGE SETUP
+% -------------------------------------------
+\@ifundefined{KOMAClassName}{
+    \setlength{\headheight}{0.75in}
+    \setlength{\oddsidemargin}{0in}
+    \setlength{\evensidemargin}{0in}
+    \setlength{\voffset}{-1.0in}
+    \setlength{\headsep}{10pt}
+    \setlength{\textwidth}{6.5in}
+    \setlength{\headwidth}{6.5in}
+    \setlength{\textheight}{8.75in}
+    \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+    \setlength{\footskip}{0.3in}
+    % Configure fancyhdr (author on left, section title on right, page number in footer)
+    \renewcommand{\headrulewidth}{0.5pt}
+    \renewcommand{\footrulewidth}{0.0pt}
+    \pagestyle{fancy}
+    \lhead{\theauthor}
+    \chead{}
+    \rhead{\nouppercase{\leftmark}}
+    \lfoot{}
+    \cfoot{\thepage}
+    \rfoot{}
+}{  
+    % KOMA-Script classes (scrbook, scrartcl) -> use scrlayer-scrpage
+    \renewcommand{\headfont}{}
+    \addtolength{\textheight}{3.14cm}
+    \setlength{\footskip}{0.5in}
+    \setlength{\headsep}{10pt}
+    \ihead{\footnotesize\textbf{\theauthor} --- \thedate}
+    \chead{}
+    \ohead{\footnotesize\textbf{\thetitle}}
+    \ofoot{} % clear double pagenumbering
+    \cfoot{\pagemark}
+    \automark{section}
+    \pagestyle{scrheadings} % Activate the scrlayer-scrpage style so headers show
+    % \AtBeginDocument{
+    %     \ifclassloaded{scrbook}{
+    %         \renewcommand*{\chapterpagestyle}{scrheadings}
+    %     }{
+    %         % for any other class, define it as a dummy command
+    %         \newcommand*{\chapterpagestyle}[1]{}
+    %     }
+    % }
+    
+}
+% \AtBeginDocument{
+%     \ifclassloaded{scrbook}{
+%         \renewcommand*{\chapterpagestyle}{scrheadings}
+%     }{
+%         % for any other class, define it as a dummy command
+%         \newcommand*{\chapterpagestyle}[1]{}
+%     }
+% }
+
+%hyperlinks
+\hypersetup{urlcolor=RubineRed,linkcolor=RoyalBlue,citecolor=ForestGreen}
+
+% -------------------------------------------
+% NEW COMMANDS
+% -------------------------------------------
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+% -------------------------------------------
+% SPACING
+% -------------------------------------------
