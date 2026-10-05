@@ -48,7 +48,7 @@
               command = ''
                 tex="''${1:-main.tex}"
                 latexmk -cd -C -emulate-aux-dir -auxdir=out -outdir=. "$tex"
-                latexmk -cd -pdf -emulate-aux-dir -auxdir=out -outdir=. "$tex"
+                latexmk -cd -lualatex -emulate-aux-dir -auxdir=out -outdir=. "$tex"
               '';
             }
           ];
