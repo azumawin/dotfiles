@@ -17,8 +17,9 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     group = tex_post_write_grp,
     pattern = "*.tex",
     callback = function()
-        -- root markers used to find the project root of current latex buffer by searching upwards
-        local root_markers = { ".git", "main.tex" }
+        -- root markers used to find the root of the project current latex buffer belongs to by searching upwards
+        -- assumes that main.tex lives at the root, if i wanted to have src/main.tex then i'd have to set a different root marker and update compile_latex_project_current_buffer_belongs_to
+        local root_markers = { "main.tex" }
         impl.compile_latex_project_current_buffer_belongs_to(root_markers)
     end,
 })

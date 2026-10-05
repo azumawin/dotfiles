@@ -7,7 +7,6 @@ return {
             -- lua = { "luacheck" },
             python = { "ruff" },
             -- cs = { },
-            tex = { "vale" },
         }
 
         local grp = vim.api.nvim_create_augroup("Linting", { clear = true })
