@@ -43,10 +43,12 @@
           commands = [
             {
               name = "ltx-rebuild";
-              help = "rebuild latex project (defaults to main.tex in current directory)";
+              help = "clean and rebuild latex project; usage: ltx-rebuild [path/to/main.tex]";
+              # the -cd flag is necessary because latexmk resolves dependencies relative to cwd
               command = ''
-                file="''${1:-main.tex}"
-                latexmk -C && latexmk -pdf -emulate-aux-dir -auxdir=out -outdir=. "$file"
+                tex="''${1:-main.tex}"
+                latexmk -cd -C -emulate-aux-dir -auxdir=out -outdir=. "$tex"
+                latexmk -cd -pdf -emulate-aux-dir -auxdir=out -outdir=. "$tex"
               '';
             }
           ];
