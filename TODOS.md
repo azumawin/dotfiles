@@ -1,20 +1,15 @@
 # TODO
 
+- setup tmux so that if a pane has nvim open it shows nvim: filename
+
 - add a README.md inside python templates folder to explain the chosen split: what flake.nix manages
   and what uv manages and reasoning
-
-- add system libraries to python flake.nix - but why not just use buildfhsenv over nix-ld - ig bcus
-  buildfhsenv is heavier and doesnt work with direnv?
 
 - add direnv
 
 - replace default login screen with nixos just like locked one
 
-- add keybind to tab to desktop and remove stuff from desktop
-
 - add a command to refresh kde
-
-- move latex styles here
 
 - add proper CLAUDE.md and settings.json, guardrails
 
@@ -28,8 +23,12 @@
 - i want to learn how to open side panels fast in zellij/tmux and turn it off fast, then turn the
   same one back on without destroying the order
 
+- remember what the latex packages do, what options they have and how to use them (particularly
+  stabelspacing.sty) and document it
+
 - setup latex snippets eventually
 
-- move to tmux
-
 - track brave config in a json as well
+
+- figure out what part of the dotfiles i'd want on a work machine and how to set it up (would prefer
+  to use nix but can use gnu stow if no root)
