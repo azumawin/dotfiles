@@ -1,7 +1,5 @@
 # TODO
 
-- setup tmux so that if a pane has nvim open it shows nvim: filename
-
 - add a README.md inside python templates folder to explain the chosen split: what flake.nix manages
   and what uv manages and reasoning
 

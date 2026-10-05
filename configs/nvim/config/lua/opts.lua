@@ -30,3 +30,7 @@ vim.opt.guicursor =
 -- https://www.reddit.com/r/neovim/comments/1c0bemk/using_ripgrep_as_grepprg_to_search_in_the_current/
 vim.o.grepprg = "rg --vimgrep --smart-case --hidden --glob '!.git'"
 vim.o.grepformat = "%f:%l:%c:%m"
+
+-- expose title so tmux can make use of it
+vim.opt.title = true
+vim.opt.titlestring = "%t"
