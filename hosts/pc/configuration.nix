@@ -122,9 +122,13 @@ in
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  programs.nix-ld.enable = true;
   programs.steam.enable = true;
   programs.obs-studio.enable = true;
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    glib
+    nss
+  ];
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   # environment.systemPackages = with pkgs; [

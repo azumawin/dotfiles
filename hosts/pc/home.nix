@@ -29,6 +29,7 @@
     btop
     tree
     mpv
+    lsof
 
     # themes
     (pkgs.callPackage ../../pkgs/nothing-theme.nix { })
