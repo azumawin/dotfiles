@@ -27,6 +27,7 @@
     gnumake
     yt-dlp
     btop
+    tree
 
     # themes
     (pkgs.callPackage ../../pkgs/nothing-theme.nix { })

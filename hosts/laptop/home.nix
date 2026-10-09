@@ -27,6 +27,7 @@
     gnumake
     yt-dlp
     btop
+    tree
 
     zathura
     obsidian
