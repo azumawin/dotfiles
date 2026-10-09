@@ -51,6 +51,7 @@ return {
                 "clangd",
                 "nil_ls",
                 "rust_analyzer",
+                "hls",
             })
         end,
     },
