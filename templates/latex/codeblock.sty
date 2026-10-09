@@ -1,0 +1,103 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{codeblock}[2026/10/09 minted presets for code listings]
+
+% azuma.sty loads xcolor with [dvipsnames] and mdframed with [framemethod=TikZ];
+% pass the same options here so this package can be loaded either before or
+% after azuma without an option clash
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\PassOptionsToPackage{framemethod=TikZ}{mdframed}
+\RequirePackage{xcolor}
+\RequirePackage{mdframed}
+\RequirePackage{minted}
+
+\definecolor{bg}{RGB}{61, 61, 61}
+\definecolor{hlbg}{RGB}{85, 85, 85}       % highlightlines, must sit above bg
+\definecolor{linenofg}{RGB}{130, 130, 130}  % line numbers, light enough for bg
+
+% minted itself draws NO block background. fvextra implements bgcolor as one
+% \colorbox per line of code, and some PDF viewers anti-alias a hairline seam
+% between consecutive boxes. mdframed draws a single rectangle behind the whole
+% listing instead, which has no internal edges to seam at any zoom level.
+\setminted{
+	style=monokai,
+	fontsize=\small,
+	autogobble,
+	breaklines,
+	breakanywhere,
+	tabsize=4,
+	highlightcolor=hlbg,
+	% line numbers: glyphs in each line's margin, not per-line fills, so these
+	% cost nothing and cannot reintroduce the seam artifact. xleftmargin makes
+	% room so they land inside the rectangle rather than in the page margin.
+	linenos,
+	xleftmargin=2.2em,
+	numbersep=8pt,
+}
+
+% inline snippets are a single line, so per-line boxes cannot seam -- these keep
+% using minted's own bgcolor
+\setmintedinline{
+	style=monokai,
+	bgcolor=bg,
+	% breaklines/breakanywhere inherited from \setminted silently destroy the
+	% inline background box, so switch them off here
+	breaklines=false,
+	breakanywhere=false,
+}
+
+\mdfdefinestyle{codebg}{
+	backgroundcolor=bg,
+	linewidth=0pt,
+	innerleftmargin=1em,
+	innerrightmargin=1em,
+	innertopmargin=0.8em,
+	innerbottommargin=0.8em,
+	skipabove=8pt,
+	skipbelow=8pt,
+}
+
+% line numbers sit on the dark rectangle, so the default black is invisible
+\renewcommand{\theFancyVerbLine}{\sffamily\footnotesize\color{linenofg}\arabic{FancyVerbLine}}
+
+% -------------------------------------------
+% ENVIRONMENTS
+% -------------------------------------------
+% \begin{codeblock}{python} ... \end{codeblock}
+%
+% \VerbatimEnvironment is what makes a wrapper around a verbatim environment
+% legal: it tells fvextra to re-scan the body with verbatim catcodes even though
+% the \begin{minted} is reached indirectly. This is the same idiom minted itself
+% uses to build the environments \newminted creates.
+\newenvironment{codeblock}[1]{%
+	\VerbatimEnvironment
+	\begin{mdframed}[style=codebg]%
+	\begin{minted}{#1}%
+}{%
+	\end{minted}%
+	\end{mdframed}%
+}
+
+% starred form takes per-block minted options:
+%   \begin{codeblock*}{python}{linenos, highlightlines={2-3}} ... \end{codeblock*}
+% the options are a mandatory second argument rather than an optional one,
+% because reading an optional argument immediately before verbatim content is
+% fragile -- minted's own starred environments make the same tradeoff.
+\newenvironment{codeblock*}[2]{%
+	\VerbatimEnvironment
+	\begin{mdframed}[style=codebg]%
+	\begin{minted}[#2]{#1}%
+}{%
+	\end{minted}%
+	\end{mdframed}%
+}
+
+% python with line numbers
+\newenvironment{pycode}{%
+	\VerbatimEnvironment
+	\begin{codeblock*}{python}{linenos}%
+}{%
+	\end{codeblock*}%
+}
+
+% inline shorthand: \py{sorted(xs, key=len)}
+\newmintinline[py]{python}{}

@@ -1,47 +1,43 @@
-in this dir ill put flake templates, depending on ecosystem used so that i can get started with a
-project straight away.
+# quick philosophy
 
-checking if it activated:
+- sdks (compilers, runtimes, interpreters, etc.), dev tools (language servers, linters, formatters,
+  etc.) are a per project concern and should not be installed globally on your machine.
+  - why: because when a project owns everything it needs to be developed and built it's easy to
+    reproduce the environment which eliminates "it works on my machine" bugs and makes deploying
+    easier, it makes onboarding easier because devs dont have to install things on their machine
+    globally, because when they're versioned in the repo there's a tool to install them too, and
+    also it just feels "correct" and "pure" for me.
+- there should only be 1 `flake.nix` per project.
+  - why: the purpose of a `flake.nix` in a project is to setup the environment for that project,
+    which may use more than 1 ecosystem (for example my uni notes use python and latex). there are
+    per-ecosystem templates in this directory, but they're used as starting points for
+    multi-ecosystem projects.
 
-```
-whereis python
-```
+# dependency layers of a project
 
-note that since i added a flake.lock, the devshell is resolved against that so it's always the same
-unless u do `nix flake update`
+language package manager owns:
 
-also note that this requires `nix-ld` enabled since language package managers like pip download
-pre-compiled binaries
+- libraries + dev tools that the whole team (including CI) must share (linters, formatters)
 
-below are the packages that i used to have installed that i decided to seperate from my global
-config into per-project flakes:
+`flake.nix` owns:
 
-```
-# language servers (note that the some language servers are also linters, so it can overlap)
-basedpyright
-pyright # not in vim.lsp.enable, kept because mason had it
-ruff # doubles as the python linter for nvim-lint
-texlab # latex
-clang-tools # clangd + clang-format come from the same package
-rust-analyzer
-roslyn-ls # c#; roslyn.nvim falls back to Microsoft.CodeAnalysis.LanguageServer on PATH
-jdt-language-server # ships the `jdtls` wrapper that ftplugin/java.lua launches
+- everything else that the project needs for development, building, running
+  - sdks
+  - native libraries (because most language package managers ship precompiled binaries for
+    manylinux, which expect the standard FHS and certain libraries to already exist, so as a nixos
+    user you have to have `nix-ld` enabled).
+  - language servers - most controversial one because technically they're part of the ecosystem,
+    though not always. so it could live in both places, but i like putting it in `flake.nix` because
+    of the "not always" and also to serve non-vscode editors.
+  - postgres, redis, and other project specific tooling that package manager can't do
 
-# formatters
-black
-rustfmt
-csharpier
-google-java-format
-# uncomment only if u want latex installed on the machine as it takes a long time.
-# texliveFull
-pgformatter # binary is `pg_format`
-taplo
-prettier
+if everyone uses nix then language package manager just owns the libraries and all tooling goes into
+`flake.nix`.
 
-# linters
-lua51Packages.luacheck
-vale
-```
+# notes
+
+templates ship `flake.lock` so package versions are pinned to the locked revision unless you do
+`nix flake update`.
 
 template usage:
 

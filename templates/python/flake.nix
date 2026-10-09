@@ -17,13 +17,13 @@
       devShells = forAllSystems (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
+            python314
             basedpyright
             uv
 
             # uv owns and must add:
             # ruff - for linting
             # black - for formatting
-            # python itself
           ];
 
           # system libraries the project requires
@@ -32,10 +32,10 @@
             pkgs.libz
           ];
 
-          # dont use global python for this, only the uv installed one
-          env.UV_PYTHON_PREFERENCE = "only-managed";
+          # use python from flake, don't let uv manage it
+          env.UV_PYTHON_PREFERENCE = "only-system";
 
-          # entering the venv is necessary since that puts black and ruff on path
+          # entering the venv is necessary since that puts black and ruff on path for nvim
           shellHook = ''
             uv sync --quiet
             source .venv/bin/activate
