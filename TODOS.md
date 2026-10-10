@@ -1,9 +1,15 @@
 # TODO
 
-- install nix-index
+- need to add uni-assignment that has latex and python and then add main.tex into latex and
+  uni-assignment templates
 
-- add a README.md inside python templates folder to explain the chosen split: what flake.nix manages
-  and what uv manages and reasoning
+- latexindent is good but 1: its installed globally and 2: its formatting codeblocks so i cant do
+  indentation in codeblocks i need to find a way to turn it off in codeblocks environment.
+
+- i dont like that when i press shift enter in claude in tmux it just takes that as enter and not a
+  newline in the prompt box.
+
+- install nix-index
 
 - add direnv
 
