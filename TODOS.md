@@ -13,8 +13,6 @@
 
 - add direnv
 
-- replace default login screen with nixos just like locked one
-
 - add proper CLAUDE.md and settings.json, guardrails
 
 - flake.nix should determine my system from hardware-configuration.nix or something, i shouldnt have
