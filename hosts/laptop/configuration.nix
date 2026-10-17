@@ -4,6 +4,18 @@
 
 { config, pkgs, ... }:
 
+let
+  # Breeze SDDM theme with nixos wallpaper patched in; the theme's own theme.conf
+  # lives in the store, so it has to be copied out to be changed.
+  sddmTheme = pkgs.runCommandLocal "sddm-breeze-nixos" { } ''
+    mkdir -p $out/share/sddm/themes
+    cp -r ${pkgs.kdePackages.plasma-desktop}/share/sddm/themes/breeze \
+      $out/share/sddm/themes/breeze-nixos
+    chmod -R u+w $out/share/sddm/themes/breeze-nixos
+    sed -i "s|^background=.*|background=${../../resources/nixos.png}|" \
+      $out/share/sddm/themes/breeze-nixos/theme.conf
+  '';
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -39,7 +51,15 @@
   };
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "${sddmTheme}/share/sddm/themes/breeze-nixos";
+    # the sddm module only sets these itself when theme == "breeze"
+    settings.Theme = {
+      CursorTheme = "breeze_cursors";
+      CursorSize = 24;
+    };
+  };
   services.desktopManager.plasma6.enable = true;
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     plasma-browser-integration
