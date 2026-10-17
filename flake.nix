@@ -44,6 +44,10 @@
           path = ./templates/latex;
           description = "LaTeX dev shell";
         };
+        base = {
+          path = ./templates/base;
+          description = "base template, starting point for any project";
+        };
       };
     };
 
