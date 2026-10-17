@@ -48,8 +48,15 @@ return {
                         "--style={BasedOnStyle: Google, IndentWidth: 4}",
                     },
                 },
+
+                -- change logs dir and dont format minted and codeblock environments
                 latexindent = {
-                    prepend_args = { "-g", "out/indent.log" },
+                    prepend_args = {
+                        "-g",
+                        "out/indent.log",
+                        "-y",
+                        "verbatimEnvironments:minted:1,verbatimEnvironments:codeblock:1",
+                    },
                 },
             },
         },
