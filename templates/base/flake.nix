@@ -20,13 +20,10 @@
             # put any packages you want here
           ];
 
-          # system libraries the project requires
           env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+            # put eny system native libraries your project requires
           ];
-
-          # use python from flake, don't let uv manage it
         };
       });
-
     };
 }
