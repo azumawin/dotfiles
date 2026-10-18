@@ -49,13 +49,14 @@ return {
                     },
                 },
 
-                -- change logs dir and dont format minted and codeblock environments
+                -- change logs dir, dont format minted and codeblock environments, wrap lines longer than 100 chars.
                 latexindent = {
                     prepend_args = {
+                        "-m",
                         "-g",
                         "out/indent.log",
                         "-y",
-                        "verbatimEnvironments:minted:1,verbatimEnvironments:codeblock:1",
+                        "verbatimEnvironments:minted:1,verbatimEnvironments:codeblock:1,modifyLineBreaks:textWrapOptions:columns:100",
                     },
                 },
             },
