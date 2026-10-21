@@ -28,6 +28,7 @@
     yt-dlp
     btop
     tree
+    mpv
 
     zathura
     obsidian

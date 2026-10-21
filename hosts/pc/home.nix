@@ -28,6 +28,7 @@
     yt-dlp
     btop
     tree
+    mpv
 
     # themes
     (pkgs.callPackage ../../pkgs/nothing-theme.nix { })
