@@ -22,7 +22,7 @@
 
     # blackglass theme
     workspace = {
-      wallpaper = ../../resources/blackglasswp.png;
+      wallpaper = ../../resources/palanga.jpeg;
       colorScheme = "Nothing";
       theme = "blackglass";
       iconTheme = "breeze-dark";
