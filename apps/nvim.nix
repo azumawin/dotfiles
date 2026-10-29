@@ -4,7 +4,7 @@
 }:
 
 {
-  xdg.configFile."nvim".source = ./config;
+  xdg.configFile."nvim".source = ../stowable-configs/nvim/.config/nvim;
 
   home.packages = with pkgs; [
     neovim

@@ -5,7 +5,7 @@
 
 {
   # these can be changed interactively via claude, but i shouldn't do that and edit them directly instead so that my config stays completely roll-backable.
-  xdg.configFile."kitty".source = ./config;
+  xdg.configFile."kitty".source = ../stowable-configs/kitty/.config/kitty;
 
   # without this home manager installs the font packages but never registers them
   # with fontconfig, so kitty silently falls back to DejaVu and nerd glyphs are tofu.

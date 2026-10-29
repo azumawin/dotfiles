@@ -32,7 +32,7 @@ in
 
 {
 
-  home.file.".gitconfig".source = ./config/.gitconfig;
+  home.file.".gitconfig".source = ../stowable-configs/git/.gitconfig;
   home.packages = [
     pkgs.git
     gitconfig

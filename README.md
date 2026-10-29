@@ -19,6 +19,8 @@ sudo nixos-rebuild switch --flake .#<host>
 
 # Cleaning up old generations (keep 5 most recent)
 
+note: these 3 commands also clean downloaded nixpkgs so u have to redownload stuff xd
+
 drop old system generations:
 
 ```

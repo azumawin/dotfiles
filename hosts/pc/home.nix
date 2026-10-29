@@ -1,20 +1,21 @@
 { pkgs, ... }:
 {
   imports = [
-    ../../configs/nvim/nvim.nix
-    ../../configs/zellij/zellij.nix
-    ../../configs/kitty/kitty.nix
-    ../../configs/tmux/tmux.nix
-    ../../configs/bash/bash.nix
-    ../../configs/claude/claude.nix
-    ../../configs/git/git.nix
-    ../../configs/plasma-manager/plasma-manager.nix
-    ../../configs/brave/brave.nix
-    ../../configs/ssh/ssh.nix
+    ./plasma-manager.nix
+    ../../apps/nvim.nix
+    ../../apps/vim.nix
+    ../../apps/zellij.nix
+    ../../apps/kitty.nix
+    ../../apps/tmux.nix
+    ../../apps/bash.nix
+    ../../apps/claude.nix
+    ../../apps/git.nix
+    ../../apps/ssh.nix
   ];
 
+  programs.brave.enable = true;
+
   home.packages = with pkgs; [
-    vim-full
     curl
     gnutar
     unzip

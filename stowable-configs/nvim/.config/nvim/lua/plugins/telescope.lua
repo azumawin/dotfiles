@@ -79,7 +79,7 @@ return {
             telescope.load_extension("fzf")
 
             vim.keymap.set("n", "<leader>fc", function()
-                builtin.find_files({ cwd = vim.fn.expand("~/dotfiles/configs/nvim/config/") })
+                builtin.find_files({ cwd = vim.fn.expand("~/dotfiles/stowable-configs/nvim/.config/nvim/") })
             end, { desc = "Telescope: find config" })
         end,
     },
