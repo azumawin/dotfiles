@@ -114,10 +114,6 @@
           "Meta+F3"
           "Ctrl+F3"
         ];
-        "Switch to Desktop 4" = [
-          "Meta+F4"
-          "Ctrl+F4"
-        ];
       };
     };
 
