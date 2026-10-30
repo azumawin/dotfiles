@@ -125,5 +125,7 @@
       ];
       rows = 1;
     };
+
+    kwin.effects.desktopSwitching.animation = "off";
   };
 }
