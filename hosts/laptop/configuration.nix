@@ -46,8 +46,10 @@ in
   # You can disable this if you're only using the Wayland session.
   services.xserver = {
     enable = true;
-    layout = "us,lt";
-    xkbOptions = "grp:win_space_toggle"; # Toggles layout using Meta + Space
+    xkb = {
+      layout = "us,lt";
+      options = "grp:win_space_toggle"; # Toggles layout using Meta + Space
+    };
   };
 
   # Enable the KDE Plasma Desktop Environment.
