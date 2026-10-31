@@ -133,6 +133,11 @@ in
     glib
     nss
   ];
+  programs.gpu-screen-recorder = {
+    enable = true;
+    ui.enable = true; # For overlay
+  };
+
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   # environment.systemPackages = with pkgs; [
