@@ -1,16 +1,12 @@
 # TODO
 
-- i need to decide on what apps should go to configuration.nix as programs.enable and packages and
-  what apps should go to home.nix,
+- write install script to install basic stuff needed for my config so i could port it to macos work
+  laptop with no root, ill use gnu stow to port dotfiles cloned from this repo
 
-- need to test gnu stow in a vm and also set some macos options to make tmux and stuff work since
-  diff shortcuts
+- test the install script and config deployment in vm (debian), since afaik homebrew is
+  cross-platform so the script should work
 
-- symlink .bashrc instead of using bash.nix so i could port same .bashrc on non-nixos systems since
-  ill use gnu stow there, since work laptop requires sudo to install nix
-
-- figure out what part of the dotfiles i'd want on a work machine and how to set it up (would prefer
-  to use nix but can use gnu stow if no root)
+- tmux piece of shit shift+enter is not working again. fix
 
 - explore `sudo nixos-rebuild` possible subcommands, it has some pretty cool stuff like build-image,
   builv-vm, etc.

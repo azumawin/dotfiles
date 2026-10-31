@@ -170,14 +170,18 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # Enable the Docker daemon
+  # enable docker daemon
   virtualisation.docker.enable = true;
 
-  # Enable rootless mode so it doesn't run as root
+  # enable rootless mode so it doesn't run as root
   virtualisation.docker.rootless = {
     enable = true;
     setSocketVariable = true;
   };
+
+  # enable virtualbox daemon and add my user to its group
+  virtualisation.virtualbox.host.enable = true;
+  users.extraUsers.azuma.extraGroups = [ "vboxusers" ];
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
