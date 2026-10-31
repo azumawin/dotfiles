@@ -4,13 +4,12 @@
     ./plasma-manager.nix
     ../../apps/nvim.nix
     ../../apps/vim.nix
-    ../../apps/zellij.nix
     ../../apps/kitty.nix
     ../../apps/tmux.nix
-    ../../apps/bash.nix
     ../../apps/claude.nix
     ../../apps/git.nix
     ../../apps/ssh.nix
+    ../../apps/zsh.nix
   ];
 
   programs.brave.enable = true;

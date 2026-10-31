@@ -124,6 +124,8 @@ in
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  programs.zsh.enable = true;
+  users.users."azuma".shell = pkgs.zsh;
   programs.steam.enable = true;
   programs.obs-studio.enable = true;
   programs.nix-ld.enable = true;

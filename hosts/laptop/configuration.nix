@@ -147,6 +147,8 @@ in
   #   wget
   # ];
 
+  programs.zsh.enable = true;
+  users.users."azuma".shell = pkgs.zsh;
   programs.nix-ld.enable = true;
   programs.obs-studio.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
