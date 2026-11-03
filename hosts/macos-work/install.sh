@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # install.sh -- set up a work macbook for SOME of the configs in stowable-configs/.
-# needs no sudo, except for the two things it only ever points at: the xcode
-# command line tools, and homebrew in its default prefix.
+# assumes an admin account: homebrew goes in its default prefix and casks land in
+# /Applications, both of which want sudo.
 # re-runnable: brew skips what's there, stow --restow re-links.
 
 set -euo pipefail
@@ -9,15 +9,12 @@ set -euo pipefail
 DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 PACKAGES=(
-  curl
   gnu-tar
-  unzip
   wget
   ripgrep
   difftastic
   fd
   fzf
-  gcc
   make
   btop
   tree
@@ -31,8 +28,9 @@ PACKAGES=(
   trash-cli   # telescope file_browser's `d` calls trash-put
 )
 
-FONTS=(
-  font-cascadia-mono # kitty.conf asks for "Cascadia Mono" by name
+CASKS=(
+  kitty
+  font-cascadia-mono   # kitty.conf asks for "Cascadia Mono" by name
   font-lilex-nerd-font # the nerd glyphs nvim draws
 )
 
@@ -41,22 +39,20 @@ STOW=(kitty nvim vim tmux git zsh)
 #==========#
 # homebrew #
 #==========#
+# the installer pulls in the xcode command line tools too, and asks for the
+# sudo password itself.
 if ! command -v brew >/dev/null 2>&1; then
-  for p in /opt/homebrew /usr/local "$HOME/homebrew"; do
-    [ -x "$p/bin/brew" ] && eval "$("$p/bin/brew" shellenv)" && break
-  done
+  [ -x /opt/homebrew/bin/brew ] || [ -x /usr/local/bin/brew ] ||
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
 fi
 
-if ! command -v brew >/dev/null 2>&1; then
-  cat >&2 <<'MSG'
-no homebrew. with admin, use the default prefix (the only one with prebuilt bottles):
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-without admin, clone it instead -- but then every formula builds from source:
-  git clone --depth=1 https://github.com/Homebrew/brew ~/homebrew
-either way, add the shellenv line to ~/.zprofile so it stays on PATH:
-  eval "$(<prefix>/bin/brew shellenv)"
-MSG
-  exit 1
+# .zprofile, not .zshrc: the stowed .zshrc is shared with nixos, and this prefix
+# is a mac-only detail. login shells read it before .zshrc either way.
+BREW_LINE="eval \"\$($(brew --prefix)/bin/brew shellenv)\""
+if ! grep -qsF "$BREW_LINE" "$HOME/.zprofile"; then
+  echo "==> adding brew shellenv to ~/.zprofile"
+  echo "$BREW_LINE" >>"$HOME/.zprofile"
 fi
 
 echo "==> homebrew at $(brew --prefix)"
@@ -65,26 +61,8 @@ brew update
 echo "==> packages"
 brew install "${PACKAGES[@]}"
 
-echo "==> fonts"
-brew install --cask "${FONTS[@]}"
-
-#=======#
-# kitty #
-#=======#
-# the cask wants /Applications, which a non-admin user can't write to. this
-# installer unpacks into ~/.local and brings the xterm-kitty terminfo entry
-# that tmux.conf's terminal-features line names.
-if [ -x "$HOME/.local/kitty.app/bin/kitty" ]; then
-  echo "==> kitty already installed"
-else
-  echo "==> kitty"
-  curl -fsSL https://sw.kovidgoyal.net/kitty/installer.sh |
-    sh /dev/stdin launch=n dest="$HOME/.local"
-  mkdir -p "$HOME/.local/bin" "$HOME/Applications"
-  ln -sf "$HOME/.local/kitty.app/bin/kitty" "$HOME/.local/bin/kitty"
-  ln -sf "$HOME/.local/kitty.app/bin/kitten" "$HOME/.local/bin/kitten"
-  ln -sfn "$HOME/.local/kitty.app" "$HOME/Applications/kitty.app"
-fi
+echo "==> casks"
+brew install --cask "${CASKS[@]}"
 
 # UNCOMMENT AND ADD CLAUDE TO STOW IF THEY ALLOW IT
 #=============#
@@ -112,14 +90,14 @@ stow --dir="$DOTFILES/stowable-configs" --target="$HOME" --restow "${STOW[@]}"
 # tmux.conf sets default-terminal tmux-256color and some macos ncurses builds
 # don't carry the entry, in which case tmux refuses to start.
 if ! infocmp tmux-256color >/dev/null 2>&1; then
-  echo "!!  no tmux-256color terminfo. fix it for your user only:" >&2
+  echo "!!  no tmux-256color terminfo:" >&2
   echo "!!    brew install ncurses" >&2
-  echo "!!    /usr/bin/tic -x -o ~/.terminfo \"\$(brew --prefix ncurses)\"/share/terminfo/t/tmux-256color" >&2
+  echo "!!    sudo tic -x -o /usr/share/terminfo \"\$(brew --prefix ncurses)\"/share/terminfo/t/tmux-256color" >&2
 fi
 
 cat <<MSG
 
-done. then:
+done. open a new shell, then:
   nvim                      # lazy.nvim bootstraps itself and installs parsers
   git config user.email ... # .gitconfig sets useConfigOnly, so every repo needs one
 MSG
