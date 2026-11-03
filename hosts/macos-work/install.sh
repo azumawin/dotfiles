@@ -64,16 +64,15 @@ brew install "${PACKAGES[@]}"
 echo "==> casks"
 brew install --cask "${CASKS[@]}"
 
-# UNCOMMENT AND ADD CLAUDE TO STOW IF THEY ALLOW IT
 #=============#
 # claude code #
 #=============#
-# if command -v claude >/dev/null 2>&1; then
-#   echo "==> claude code already installed"
-# else
-#   echo "==> claude code (cleared with whoever owns the policy here?)"
-#   curl -fsSL https://claude.ai/install.sh | bash
-# fi
+if command -v claude >/dev/null 2>&1; then
+  echo "==> claude code already installed"
+else
+  echo "==> claude code (cleared with whoever owns the policy here?)"
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
 
 #======#
 # stow #
