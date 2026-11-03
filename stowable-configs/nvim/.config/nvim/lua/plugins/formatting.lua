@@ -12,7 +12,7 @@ return {
                 tex = { "latexindent" },
                 java = { "google-java-format" },
                 xml = { "xmlformatter" },
-                markdown = { "mdformat" },
+                -- markdown = { "mdformat" },
                 c = { "clang-format" },
                 sql = { "pg_format" },
                 toml = { "taplo" },
