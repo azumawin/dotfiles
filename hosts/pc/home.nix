@@ -30,6 +30,7 @@
     tree
     mpv
     lsof
+    alsa-utils
 
     # themes
     (pkgs.callPackage ../../pkgs/nothing-theme.nix { })
