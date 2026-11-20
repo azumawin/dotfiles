@@ -46,11 +46,18 @@ require("lazy").setup({
 
     { import = "plugins.docstrings" },
 
+    { import = "plugins.harpoon" },
+
     { "tpope/vim-surround" },
 
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         config = true,
+    },
+
+    {
+        "mg979/vim-visual-multi",
+        branch = "master",
     },
 }, { lockfile = vim.fn.expand("~/dotfiles/stowable-configs/nvim/.config/nvim/lazy-lock.json") })
