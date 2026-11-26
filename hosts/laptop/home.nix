@@ -29,6 +29,7 @@
     btop
     tree
     mpv
+    libreoffice
 
     zathura
     obsidian

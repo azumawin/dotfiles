@@ -1,5 +1,6 @@
 # TODO
 
+- when i open claude in nvim buffer i want it to open in same tmux pane as the claude and when i exit nvim it should go back to the claude prompt
 - explore `sudo nixos-rebuild` possible subcommands, it has some pretty cool stuff like build-image,
   builv-vm, etc.
 

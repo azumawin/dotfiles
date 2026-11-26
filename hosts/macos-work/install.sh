@@ -24,7 +24,9 @@ PACKAGES=(
   tmux
   stow
   git
+  # actually idk why both
   tree-sitter # nvim-treesitter's build step shells out to the cli
+  tree-sitter-cli
   trash-cli   # telescope file_browser's `d` calls trash-put
 )
 
